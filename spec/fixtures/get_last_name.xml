@@ -1,0 +1,4 @@
+<type:getLastName xmlns:type="http://example.com/UserService/type/">
+  <!--Optional:-->
+  <userIdentifier>string</userIdentifier>
+</type:getLastName>
