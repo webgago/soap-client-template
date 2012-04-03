@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "soap-client-templating/version"
+require "soap-client-template/version"
 
 Gem::Specification.new do |s|
-  s.name        = "soap-client-templating"
+  s.name        = "soap-client-template"
   s.version     = Soap::Client::Template::VERSION
   s.authors     = ["Anton Sozontov"]
   s.email       = ["asozontov@at-consulting.ru"]
@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{TODO: Write a gem summary}
   s.description = %q{TODO: Write a gem description}
 
-  s.rubyforge_project = "soap-client-templating"
+  s.rubyforge_project = "soap-client-template"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
 
   s.add_runtime_dependency "libxml-ruby"
+  s.add_runtime_dependency "activesupport"
 end

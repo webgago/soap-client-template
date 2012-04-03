@@ -10,7 +10,7 @@ module WSDL
     def compile(options = { })
       options = { ext: 'xml' }.merge options
 
-      instance.operations.each do |key, operations|
+      instance.operations.each do |_, operations|
         operations.each do |operation|
           xml = `xsd2inst #{xsd_filepath} -name #{operation}`.chomp
           write xml, operation.dup, options.dup
