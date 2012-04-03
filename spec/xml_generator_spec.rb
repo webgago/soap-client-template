@@ -18,13 +18,17 @@ describe "Generate xml from wsdl/xsd" do
 
   let(:instance) { WSDL::Reader.new(wsdl_location).read }
   let(:dir) { @dir }
+  let(:generated_files) { Dir["#{dir}/*.xml"] }
 
 
   it "should generate template for all operations from each bindings to specify directory", :slow => true do
     generator = WSDL::XMLGenerator.new xsd_location, instance
     generator.compile to: dir
 
-    Dir["#{dir}/*.xml"].count.should eql instance.operations.map(&:count).sum
+    generated_files.count.should eql instance.operations.map(&:count).sum
+    generated_files.each do |filename|
+      File.read(filename).should eql read_fixture_with_underscored_name(filename)
+    end
   end
 
 end

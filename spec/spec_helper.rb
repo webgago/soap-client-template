@@ -11,8 +11,16 @@ $: << File.expand_path("../lib")
 require "soap-client-template"
 require "wsdl"
 
+module FixtureAccess
+  def read_fixture_with_underscored_name(filename)
+    File.read('spec/fixtures/' + File.basename(filename).underscore)
+  end
+end
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
+
+  config.include FixtureAccess
 end
