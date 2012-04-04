@@ -1,4 +1,9 @@
-<type:getFirstName xmlns:type="http://example.com/UserService/type/">
+<type:getFirstName id="string" xmlns:type="http://example.com/UserService/type/">
   <!--Optional:-->
   <userIdentifier>string</userIdentifier>
+  <!--Optional:-->
+  <filter>
+    <type:age>100</type:age>
+    <type:gender>female</type:gender>
+  </filter>
 </type:getFirstName>

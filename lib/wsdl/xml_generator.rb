@@ -1,28 +1,27 @@
 module WSDL
   class XMLGenerator
+    include Enumerable
 
     attr_reader :instance, :xsd_filepath
+    protected :instance, :xsd_filepath
 
     def initialize(xsd_filepath, wsdl_instance)
       @xsd_filepath, @instance = xsd_filepath, wsdl_instance
+      @cached_xml = {}
     end
 
-    def compile(options = { }, &block)
-      options = { ext: 'xml' }.merge options
-
+    def each(&block)
       instance.operations.each do |_, operations|
         operations.each do |operation|
-          xml = `xsd2inst #{xsd_filepath} -name #{operation}`.chomp
-          write xml, operation.dup, options.dup, &block
+          block.call operation.dup, generate_xml(operation)
         end
       end
     end
 
     private
-    def write(xml, operation, options, &block)
-      Pathname.new(options[:to]).join(operation << '.' << options[:ext]).open('w+') do |f|
-        f << block.call(xml, operation, options)
-      end
+
+    def generate_xml(operation)
+      @cached_xml[operation] ||= `xsd2inst #{xsd_filepath} -name #{operation}`.chomp
     end
 
   end
