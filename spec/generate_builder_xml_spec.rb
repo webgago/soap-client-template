@@ -20,7 +20,6 @@ describe "Generate Builder::XmlMarkup from wsdl/xsd" do
   it "should rewrite xml to builder xml markup", :slow => true do
     xml_generator = WSDL::XMLGenerator.new xsd_location, instance
 
-
     Generator.new(xml_generator, converter: XmlToBuilderXmlConverter.new).generate :to_file, dir: @dir, ext: 'xml.builder'
 
     File.read("#{@dir}/get_first_name.xml.builder").should eql read_fixture_with_underscored_name('get_first_name.xml.builder')
