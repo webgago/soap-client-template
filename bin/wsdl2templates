@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+###
+### $Release: 2.7.0 $
+### copyright(c) 2006-2011 kuwata-lab.com all rights reserved.
+###
+
+$:.unshift File.expand_path('../../lib/', __FILE__)
+
+require File.expand_path('../../lib/soap-client-template', __FILE__)
+require "thor"
+
+class Wsdl2Templates < Thor
+
+  desc 'generate [dir, wsdl path, xsd path]', "Generate XML instances for each WSDL operation"
+  def generate(dir, wsdl, xsd)
+    Soap::Client::Template.generate wsdl, xsd, dir
+  end
+
+end
+
+Wsdl2Templates.start
