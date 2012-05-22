@@ -21,6 +21,12 @@ module Soap
       mattr_accessor :xsd2inst_path
       self.xsd2inst_path = File.expand_path('../../vendor/xmlbeans-2.5.0/bin/xsd2inst', __FILE__)
 
+      mattr_accessor :enable_comments
+      self.enable_comments = false
+
+      mattr_accessor :override_files
+      self.override_files = false
+
       class Railtie < ::Rails::Railtie
         rake_tasks do
           load "rails/tasks/soap-templates.rake"

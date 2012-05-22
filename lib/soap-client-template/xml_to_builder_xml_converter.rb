@@ -40,7 +40,7 @@ module Soap::Client::Template
     def build_node(node)
       case node.node_type_name
         when 'comment'
-          buf.puts spacer + "xml.comment! '#{node.content}'"
+          buf.puts spacer + "xml.comment! '#{node.content}'" if Soap::Client::Template.enable_comments
 
         when 'element'
           if node.namespaces.namespace

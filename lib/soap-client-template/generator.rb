@@ -2,7 +2,7 @@ module Soap::Client::Template
   class Generator
 
     def initialize(messages, options = { })
-      @messages = messages
+      @messages  = messages
       @converter = options[:converter] || lambda { |xml| xml }
     end
 
@@ -19,17 +19,23 @@ module Soap::Client::Template
 
       file = Pathname.new(output[:dir]).join(operation.underscore << '.' << output[:ext])
 
-      file.open('w+') do |f|
-        f << content
+      if can_write? file
+        file.open('w+') do |f|
+          f << content
+        end
       end
     end
 
     def to_io(output, operation, content)
       check_output!(:to_io, output)
       output << "Operation: <#{operation}>\n"
-      output << ("-" * 40 ) << "\n"
+      output << ("-" * 40) << "\n"
       output << "\n"
       output << content
+    end
+
+    def can_write?(file)
+      file.exist? ? Soap::Client::Template.override_files : true
     end
 
     def call(strategy, params)
