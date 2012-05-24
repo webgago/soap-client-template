@@ -5,8 +5,8 @@ module Soap::Client::Template::WSDL
     attr_reader :instance, :xsd_filepath
     protected :instance, :xsd_filepath
 
-    def initialize(xsd_filepath, wsdl_instance)
-      @xsd_filepath, @instance = xsd_filepath, wsdl_instance
+    def initialize(xsd_filepath, wsdl_instance, operation=nil)
+      @xsd_filepath, @instance, @operation = xsd_filepath, wsdl_instance, operation
       @cached_xml = { }
 
       raise ArgumentError, "path to xsd file not specify" unless @xsd_filepath.present?
@@ -16,6 +16,7 @@ module Soap::Client::Template::WSDL
     def each(&block)
       instance.operations.each do |_, operations|
         operations.each do |operation|
+          next if @operation && operation != @operation
           block.call operation.dup, generate_xml(operation)
         end
       end

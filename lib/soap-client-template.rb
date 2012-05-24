@@ -10,6 +10,7 @@ require "active_support/core_ext/module"
 require "active_support/core_ext/hash/keys"
 
 require "rails"
+require "fileutils"
 require "soap-client-template/wsdl"
 require "soap-client-template/generator"
 require "soap-client-template/xml_to_builder_xml_converter"
@@ -33,10 +34,11 @@ module Soap
         end
       end
 
-      def self.generate(wsdl, xsd, dir)
+      def self.generate(wsdl, xsd, dir, operation=nil)
         wsdl_instance = WSDL::Reader.new(wsdl).read
-        xml = WSDL::XMLGenerator.new xsd, wsdl_instance
+        xml = WSDL::XMLGenerator.new xsd, wsdl_instance, operation
         generator = Generator.new(xml, converter: XmlToBuilderXmlConverter.new)
+        FileUtils.mkdir_p dir
         generator.generate :to_file, dir: dir, ext: 'xml.builder'
       end
     end
